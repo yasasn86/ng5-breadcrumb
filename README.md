@@ -4,6 +4,7 @@ For a live example see: https://plnkr.co/moszmD
 
 ## Dependencies
 Requires bootstrap.css (v 3.x.x) for styling of some elements (although the component is fully functional without it).
+The reflect-metadata npm library to extract the RouterConfig metadata.
 
 ## Install
 Install the module via npm:
@@ -27,7 +28,7 @@ Place the selector in your html and optionally pass it your `@RouterConfig`. The
 
 	<breadcrumb [routeConfig]="routeConfig"></breadcrumb>
 
-In order to extract your components *@RouterConfig* from your classes annotation (decorator), you can put the following in your constructor. 
+In order to extract your components *@RouterConfig* from your classes annotation (decorator), you can put the following in your constructor. Uses the reflect-metadata npm library to extract the RouterConfig metadata, so be sure to add it to your list of dependencies.
 Be sure create the *routeConfig* variable in your class and swap in your component in the *getOwnMetadata('annotations', MyComponent) * function.
     
     public routeConfig: String[];

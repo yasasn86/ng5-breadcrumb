@@ -39,7 +39,7 @@ import {ROUTER_DIRECTIVES, RouteConfig, Router, RouteDefinition} from 'angular2/
       .breadcrumb > .active {
         color: #555555;
       }
-    `
+    ]`
 })
 export class BreadcrumbComponent {
 
