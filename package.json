@@ -1,6 +1,6 @@
 {
     "name": "ng2-breadcrumb",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "A componenet that creates a breadcrumb trail for router paths",
     "scripts": {
         "tslint": "tslint -c tslint.json src/**/*.ts"
@@ -15,14 +15,15 @@
     "main": "ng2-bootstrap.js",
     "typings": "./ng2-bootstrap.d.ts",
     "devDependencies": {
-        "angular2": "^2.0.0-beta.7",
+        "angular2": "~2.0.0-beta.13",
         "del": "^2.1.0",
         "es6-promise": "~3.0.2",
-        "es6-shim": "~0.33.3",
+        "es6-shim": "~0.35.0",
         "gulp": "^3.9.0",
         "gulp-typescript": "^2.8.0",
         "gulp-sourcemaps ": "^1.6.0",
         "gulp-inline-ng2-template": "^1.1.2",
+        "gulp-tslint": "~4.3.4",
         "reflect-metadata": "0.1.2",
         "require-dir": "0.3.0",
         "rxjs": "5.0.0-beta.2",
@@ -33,6 +34,6 @@
         "tsproject": "1.2.0",
         "typescript": "^1.7.5",
         "typings": "^0.6.8",
-        "zone.js": "0.5.15"
+        "zone.js": "0.6.6"
     }
 }

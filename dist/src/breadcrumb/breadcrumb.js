@@ -23,7 +23,6 @@ var BreadcrumbComponent = (function () {
         this._urls = new Array();
         this.router.subscribe(function (value) {
             _this._urls.length = 0; //Fastest way to clear out array
-            _this._activeUrl = value;
             _this.generateBreadcrumbTrail(value);
         });
     }
@@ -58,26 +57,17 @@ var BreadcrumbComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(BreadcrumbComponent.prototype, "activeUrl", {
-        get: function () {
-            return this._activeUrl;
-        },
-        set: function (value) {
-            this._activeUrl = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
     __decorate([
-        core_1.Input('routeConfig'),
+        core_1.Input('routeConfig'), 
         __metadata('design:type', Array)
     ], BreadcrumbComponent.prototype, "routeConfig", void 0);
     BreadcrumbComponent = __decorate([
         core_1.Component({
             selector: 'breadcrumb',
             directives: [common_1.FORM_DIRECTIVES, router_1.ROUTER_DIRECTIVES, common_1.NgClass],
-            template: "\n        <div class=\"sub-header\">\n            <h2 id=\"page-title\">{{friendlyName(activeUrl)}}</h2>\n            <div>\n                <ul class=\"breadcrumb\">\n                    <li *ngFor=\"#url of urls; #last = last\" [ngClass]=\"{'active': last}\"> <!-- disable link of last item -->\n                        <a *ngIf=\"!last\" (click)=\"navigateTo(url)\">{{friendlyName(url)}}</a>\n                        <span *ngIf=\"last\">{{friendlyName(url)}}</span>\n                    </li>\n                </ul>\n            </div>\n        </div>\n    "
-        }),
+            template: "\n      <div>\n          <ul class=\"breadcrumb\">\n              <li *ngFor=\"#url of urls; #last = last\" [ngClass]=\"{'active': last}\"> <!-- disable link of last item -->\n                  <a *ngIf=\"!last\" (click)=\"navigateTo(url)\">{{friendlyName(url)}}</a>\n                  <span *ngIf=\"last\">{{friendlyName(url)}}</span>\n              </li>\n          </ul>\n      </div>\n    ",
+            styles: ["\n      .breadcrumb {\n        padding: 8px 15px;\n        margin-bottom: 20px;\n        list-style: none;\n        background-color: transparent;\n        border-radius: 3px;\n      }\n      .breadcrumb > li {\n        display: inline-block;\n      }\n      .breadcrumb > li + li:before {\n        content: \"/\";\n        padding: 0 5px;\n        color: #999999;\n      }\n      .breadcrumb > .active {\n        color: #555555;\n      }\n    ]"]
+        }), 
         __metadata('design:paramtypes', [router_1.Router])
     ], BreadcrumbComponent);
     return BreadcrumbComponent;

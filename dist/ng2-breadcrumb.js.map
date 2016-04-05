@@ -1,1 +1,1 @@
-{"version":3,"sources":["ng2-breadcrumb.ts"],"names":[],"mappings":";AAAA,2BAAkC,6BAA6B,CAAC;AAAxD,+DAAwD","file":"ng2-breadcrumb.js","sourcesContent":["export {BreadcrumbComponent} from './src/breadcrumb/breadcrumb';"],"sourceRoot":"/source/"}
+{"version":3,"sources":["ng2-breadcrumb.ts"],"names":[],"mappings":";AAAA,2BAAkC,6BAA6B,CAAC;AAAxD,+DAAwD","file":"ng2-breadcrumb.js","sourcesContent":["export {BreadcrumbComponent} from './src/breadcrumb/breadcrumb';\n"],"sourceRoot":"/source/"}
