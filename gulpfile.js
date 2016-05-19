@@ -32,4 +32,5 @@ gulp.task('tslint', function() {
 });
 
 gulp.task('build', ['tslint', 'compile']);
-gulp.task('default', ['build']);
+// gulp.task('default', ['build']);
+gulp.task('default', ['compile']);

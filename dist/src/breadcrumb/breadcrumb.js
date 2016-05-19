@@ -8,9 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('angular2/core');
-var common_1 = require('angular2/common');
-var router_1 = require('angular2/router');
+var core_1 = require('@angular/core');
+var common_1 = require('@angular/common');
+var router_1 = require('@angular/router');
 /**
  * This component shows a router's paths as breadcrumb trails and allows you to navigate to any of them.
  * It subscribes to the router in order to update the breadcrumb trail as you navigate to a component.
@@ -21,15 +21,16 @@ var BreadcrumbComponent = (function () {
         var _this = this;
         this.router = router;
         this._urls = new Array();
-        this.router.subscribe(function (value) {
-            _this._urls.length = 0; //Fastest way to clear out array
-            _this.generateBreadcrumbTrail(value);
+        this.router.changes.subscribe(function () {
+            _this._urls.length = 0; // Fastest way to clear out array
+            console.log(_this.router.urlTree);
+            // this.generateBreadcrumbTrail();
         });
     }
     BreadcrumbComponent.prototype.generateBreadcrumbTrail = function (url) {
-        this._urls.unshift(url); //Add url to beginning of array (since the url is being recursively broken down from full url to its parent paths)
+        this._urls.unshift(url); // Add url to beginning of array (since the url is being recursively broken down from full url to its parent paths)
         if (url.lastIndexOf('/') > 0) {
-            this.generateBreadcrumbTrail(url.substr(0, url.lastIndexOf('/'))); //Recursively add parent url
+            this.generateBreadcrumbTrail(url.substr(0, url.lastIndexOf('/'))); // Recursively add parent url
         }
     };
     BreadcrumbComponent.prototype.navigateTo = function (url) {
@@ -66,7 +67,7 @@ var BreadcrumbComponent = (function () {
             selector: 'breadcrumb',
             directives: [common_1.FORM_DIRECTIVES, router_1.ROUTER_DIRECTIVES, common_1.NgClass],
             template: "\n      <div>\n          <ul class=\"breadcrumb\">\n              <li *ngFor=\"#url of urls; #last = last\" [ngClass]=\"{'active': last}\"> <!-- disable link of last item -->\n                  <a *ngIf=\"!last\" (click)=\"navigateTo(url)\">{{friendlyName(url)}}</a>\n                  <span *ngIf=\"last\">{{friendlyName(url)}}</span>\n              </li>\n          </ul>\n      </div>\n    ",
-            styles: ["\n      .breadcrumb {\n        padding: 8px 15px;\n        margin-bottom: 20px;\n        list-style: none;\n        background-color: transparent;\n        border-radius: 3px;\n      }\n      .breadcrumb > li {\n        display: inline-block;\n      }\n      .breadcrumb > li + li:before {\n        content: \"/\";\n        padding: 0 5px;\n        color: #999999;\n      }\n      .breadcrumb > .active {\n        color: #555555;\n      }\n    ]"]
+            styles: ["\n      .breadcrumb {\n        padding: 8px 15px;\n        margin-bottom: 20px;\n        list-style: none;\n        background-color: transparent;\n        border-radius: 3px;\n      }\n      .breadcrumb > li {\n        display: inline-block;\n      }\n      .breadcrumb > li + li:before {\n        content: \"/\";\n        padding: 0 5px;\n        color: #999999;\n      }\n      .breadcrumb > .active {\n        color: #555555;\n      }\n   "]
         }), 
         __metadata('design:paramtypes', [router_1.Router])
     ], BreadcrumbComponent);

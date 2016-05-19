@@ -44,6 +44,6 @@ Be sure create the *routeConfig* variable in your class and swap in your compone
 	}
     
 ## Build
-To compile the project locally just run the default gulp task:
+To compile the project locally just run the default gulp task (ensure you have gulp install globally to do this):
 
     gulp

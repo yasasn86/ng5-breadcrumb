@@ -1,6 +1,7 @@
-import {Component, Input} from 'angular2/core';
-import {FORM_DIRECTIVES, NgClass} from 'angular2/common';
-import {ROUTER_DIRECTIVES, RouteConfig, Router, RouteDefinition} from 'angular2/router';
+import {Component, Input} from '@angular/core';
+import {FORM_DIRECTIVES, NgClass} from '@angular/common';
+import {ROUTER_DIRECTIVES, Router} from '@angular/router';
+import {RouteConfig, RouteDefinition} from '@angular/router-deprecated';
 
 /**
  * This component shows a router's paths as breadcrumb trails and allows you to navigate to any of them.
@@ -39,7 +40,7 @@ import {ROUTER_DIRECTIVES, RouteConfig, Router, RouteDefinition} from 'angular2/
       .breadcrumb > .active {
         color: #555555;
       }
-    ]`
+   `]
 })
 export class BreadcrumbComponent {
 
@@ -48,16 +49,17 @@ export class BreadcrumbComponent {
 
     constructor(private router: Router) {
         this._urls = new Array();
-        this.router.subscribe((value) => {
-            this._urls.length = 0; //Fastest way to clear out array
-            this.generateBreadcrumbTrail(value);
+        this.router.changes.subscribe(() => {
+            this._urls.length = 0; // Fastest way to clear out array
+            console.log(this.router.urlTree);
+            // this.generateBreadcrumbTrail();
         })
     }
 
     generateBreadcrumbTrail(url: String): void {
-        this._urls.unshift(url); //Add url to beginning of array (since the url is being recursively broken down from full url to its parent paths)
+        this._urls.unshift(url); // Add url to beginning of array (since the url is being recursively broken down from full url to its parent paths)
         if (url.lastIndexOf('/') > 0) {
-            this.generateBreadcrumbTrail(url.substr(0, url.lastIndexOf('/'))); //Recursively add parent url
+            this.generateBreadcrumbTrail(url.substr(0, url.lastIndexOf('/'))); // Recursively add parent url
         }
     }
 
