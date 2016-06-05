@@ -1,2 +1,0 @@
-1) publish only 'dist' folders contents to npm
-2) config tslint for gulp build
