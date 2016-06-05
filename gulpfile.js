@@ -1,35 +1,38 @@
 var gulp = require('gulp');
-var del = require('del');
-var typescript = require('gulp-typescript');
-var sourcemaps = require('gulp-sourcemaps');
-var tscConfig = require('./tsconfig.json');
-var tslint = require('gulp-tslint');
-var inlineNg2Template = require('gulp-inline-ng2-template');
-var tsproject = require( 'tsproject' );
 
-// clean the contents of the distribution directory
-gulp.task('clean', function () {
-  return del('dist/**/*');
+var PATHS = {
+    src: '/**/*.ts'
+};
+
+gulp.task('clean', function (done) {
+    var del = require('del');
+    del(['dist'], done);
 });
 
-// TypeScript compile
-gulp.task('compile', ['clean'], function () {
-  return gulp
-    .src(tscConfig.files)
-    .pipe(inlineNg2Template({
-      useRelativePaths: true
-    }))
-    .pipe(sourcemaps.init())
-    .pipe(typescript(tscConfig.compilerOptions))
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('dist'));
+gulp.task('build', function () {
+    var ts = require('gulp-typescript');
+    var tsProject = ts.createProject('tsconfig.json', {declaration: true});
+
+    var tsResult = tsProject.src()
+        .pipe(ts(tsProject));
+    tsResult.dts.pipe(gulp.dest('./')); // Generate d.ts files alongside ts files
+
+    return tsResult.js.pipe(gulp.dest('')); // Generate js files alongside ts files
 });
 
-gulp.task('tslint', function() {
-  return gulp.src('src/**/*.ts')
-    .pipe(tslint())
-    .pipe(tslint.report('verbose'));
+gulp.task('bundle', function() {
+    var ts = require('gulp-typescript');
+
+    var tsProject = ts.createProject('tsconfig.json', {
+        module: 'system',
+        outFile: 'ng2-breadcrumb.js' // outFile is only supported with the system module
+    });
+
+    var tsResult = tsProject.src()
+        .pipe(ts(tsProject));
+
+    return tsResult.js
+        .pipe(gulp.dest('./bundles')); // Generate bundle file
 });
 
-gulp.task('build', ['tslint', 'compile']);
 gulp.task('default', ['build']);

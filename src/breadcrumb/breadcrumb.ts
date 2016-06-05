@@ -1,24 +1,24 @@
-import {Component, Input} from 'angular2/core';
-import {FORM_DIRECTIVES, NgClass} from 'angular2/common';
-import {ROUTER_DIRECTIVES, RouteConfig, Router, RouteDefinition} from 'angular2/router';
+import {Component} from '@angular/core';
+import {FORM_DIRECTIVES, Location} from '@angular/common';
+import {ROUTER_DIRECTIVES, Router} from '@angular/router';
+import {BreadcrumbService} from './breadcrumbService';
 
 /**
- * This component shows a router's paths as breadcrumb trails and allows you to navigate to any of them.
+ * This component shows a breadcrumb trail for available routes the router can navigate to.
  * It subscribes to the router in order to update the breadcrumb trail as you navigate to a component.
- * By providing a RouteConfig the component will be able to use the 'as' name to display in the breadcrumbs links.
  */
 @Component({
     selector: 'breadcrumb',
-    directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES, NgClass],
+    directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES],
     template: `
-      <div>
-          <ul class="breadcrumb">
-              <li *ngFor="#url of urls; #last = last" [ngClass]="{'active': last}"> <!-- disable link of last item -->
-                  <a *ngIf="!last" (click)="navigateTo(url)">{{friendlyName(url)}}</a>
-                  <span *ngIf="last">{{friendlyName(url)}}</span>
-              </li>
-          </ul>
-      </div>
+        <div>
+            <ul class="breadcrumb">
+                <li *ngFor="let url of urls; let last = last" [ngClass]="{'active': last}"> <!-- disable link of last item -->
+                    <a role="button" *ngIf="!last" (click)="navigateTo(url)">{{friendlyName(url)}}</a>
+                    <span *ngIf="last">{{friendlyName(url)}}</span>
+                </li>
+            </ul>
+        </div>
     `,
     styles: [`
       .breadcrumb {
@@ -39,25 +39,26 @@ import {ROUTER_DIRECTIVES, RouteConfig, Router, RouteDefinition} from 'angular2/
       .breadcrumb > .active {
         color: #555555;
       }
-    ]`
+   `]
 })
 export class BreadcrumbComponent {
 
-    @Input('routeConfig') routeConfig: RouteDefinition[];
-    private _urls: String[];
+    private _urls: string[];
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private location: Location, private breadcrumbService: BreadcrumbService) {
         this._urls = new Array();
-        this.router.subscribe((value) => {
+        this.router.changes.subscribe(() => {
             this._urls.length = 0; //Fastest way to clear out array
-            this.generateBreadcrumbTrail(value);
-        })
+            this.generateBreadcrumbTrail(this.location.platformStrategy.path());
+        });
     }
 
-    generateBreadcrumbTrail(url: String): void {
-        this._urls.unshift(url); //Add url to beginning of array (since the url is being recursively broken down from full url to its parent paths)
+    generateBreadcrumbTrail(url: string): void {
+        this._urls.unshift(url); //Add url to beginning of array (since the url is being recursively broken down from full url to its parent)
         if (url.lastIndexOf('/') > 0) {
-            this.generateBreadcrumbTrail(url.substr(0, url.lastIndexOf('/'))); //Recursively add parent url
+            this.generateBreadcrumbTrail(url.substr(0, url.lastIndexOf('/'))); //Recursively add child to parent url
+        } else if (url.lastIndexOf('%') > 0) {
+            this.generateBreadcrumbTrail(url.substr(0, url.lastIndexOf('%'))); //Recursively add sibling as child to parent url
         }
     }
 
@@ -65,25 +66,15 @@ export class BreadcrumbComponent {
         this.router.navigateByUrl(url);
     }
 
-    friendlyName(url: String): String {
-        if (this.routeConfig && url) {
-            let route: RouteDefinition;
-            for (let i = 0; i < this.routeConfig.length; i += 1) {
-                route = this.routeConfig[i];
-                if (url == route.path) {
-                    return route.as;
-                }
-            }
-        }
-
-        return url;
+    friendlyName(url: string): String {
+        return !url ? '' : this.breadcrumbService.getFriendlyNameForRoute(url);
     }
 
-    get urls() {
+    get urls(): string[] {
         return this._urls;
     }
 
-    set urls(value) {
+    set urls(value: string[]) {
         this._urls = value;
     }
 

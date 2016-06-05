@@ -1,33 +1,20 @@
 {
+    "version": "1.8.9",
     "compilerOptions": {
-        "outDir": "dist",
         "module": "commonjs",
+        "moduleResolution": "node",
         "target": "ES5",
-        "noImplicitAny": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "inlineSourceMap": true,
         "inlineSources": true,
-        "declaration": true,
-        "moduleResolution": "node"
+        "declaration": true
     },
-    "files": [
-        "ng2-breadcrumb.ts",
-        "./src/breadcrumb/breadcrumb.ts",
-        "node_modules/typescript/lib/lib.es6.d.ts"
-    ],
     "exclude": [
+        "typings/main",
+        "typings/main.d.ts",
         "node_modules",
+        "bundles",
         "dist"
-    ],
-    "bundles": {
-        "app": {
-            "files": [
-                "ng2-breadcrumb.ts"
-            ],
-            "config": {
-                "outDir": "./bundles"
-            }
-        }
-    }
+    ]
 }
