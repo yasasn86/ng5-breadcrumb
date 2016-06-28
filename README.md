@@ -1,23 +1,22 @@
 # ng2-breadcrumb
-This component generates a breadcrumb trail as you navigate to child paths using the @angular/router. Each new route & router-outlet is treated as an endpoint, 
-that shows up as a new level in the breadcrumb trail. Its also possible to create a conceptual parent child hierarchy with just sibling routes, using the '%' char when defining a route path. 
-For example the below Routes uses a single router-outlet, but will be 3 levels deep in the breadcrumb trail:
+This component generates a breadcrumb trail, as you navigate to child routes using the @angular/router. It interprets the browser URL of a navigate request, 
+in the same way the component router does to match a path to a specific component, to build up a hierarchy of available parent/child routes for that destination.
 
-	@Routes([
-		{ path: '/comp1', component: Component1},
-		{ path: '/comp1%comp2', component: Component2},
-		{ path: '/comp1%comp2%comp3', component: Component3}
-	])
+So given a navigation request to a url '/comp1/comp2/comp3', a breadcrumb trail with 3 levels will be generated. Each level includes all the elements from the previous 
+level along with the next child. Thus the above url request will result in the following 3 levels being generated: '/comp1', '/comp1/comp2', '/comp1/comp2/comp3'.
 
-Theres a breadcrumbService that allows you to add friendly names for each of your apps route paths (the friendly name will ultimately show up in the breadcrumb trail):
+Theres a breadcrumbService that allows you to add friendly names for each of your app's available routes. This friendly name will show up in the breadcrumb trail 
+for each matching level, otherwise it will show the full url fragment.
+
+Below is an example of how to use the breadcrumbService, to give friendly names to the 3 levels availbe in the example app.
 
 	constructor(private breadcrumbService: BreadcrumbService) {
 		breadcrumbService.addFriendlyNameForRoute('/comp1', 'Comp 1');
-		breadcrumbService.addFriendlyNameForRoute('/comp1%comp2', 'Comp 2');
-		breadcrumbService.addFriendlyNameForRoute('/comp1%comp2%comp3', 'Comp 3');
+		breadcrumbService.addFriendlyNameForRoute('/comp1/comp2', 'Comp 2');
+		breadcrumbService.addFriendlyNameForRoute('/comp1/comp2/comp3', 'Comp 3');
 	}
 
-For a live example see: https://embed.plnkr.co/H0C1rL2oEM2Bu4XYJNEO/
+For a live example see: http://plnkr.co/BO2ruqRzNeu5BsZqCYtW
 
 ## Dependencies
 Requires bootstrap.css (v 3.x.x) for styling of some elements (although the component is fully functional without it).
@@ -36,7 +35,7 @@ Import the BreadcrumbService and make it available as a global provider when you
 		BreadcrumbService
 	])
 
-Import both the BreadcrumbComponent & BreadcrumbService into your component and update its list of directives:
+Import both the BreadcrumbComponent & BreadcrumbService into your component and update its directive list:
 
 	import {BreadcrumbComponent, BreadcrumbService} from 'ng2-breadcrumb/ng2-breadcrumb';
 
@@ -47,13 +46,13 @@ Import both the BreadcrumbComponent & BreadcrumbService into your component and 
 		...
 	}
 	
-Inject the BreadcrumbService via the components constructor so you can add friendly names for each of your apps routes:
+Inject the BreadcrumbService via the component's constructor, so you can add friendly names for each of your apps routes:
 
 	constructor(private breadcrumbService: BreadcrumbService) {
 		breadcrumbService.addFriendlyNameForRoute('/home', 'Home Sweet Home');
 	}
 
-Place the breadcrumb selector in your components html where you added your router-outlet:
+Place the breadcrumb selector in your component's html where you added your router-outlet:
 
 	<breadcrumb></breadcrumb>
 	<router-outlet></router-outlet>
