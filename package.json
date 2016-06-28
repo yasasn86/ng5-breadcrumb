@@ -1,6 +1,6 @@
 {
     "name": "ng2-breadcrumb",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "description": "A componenet that creates a breadcrumb trail for router paths",
     "scripts": {
     },
@@ -14,13 +14,12 @@
     "main": "ng2-bootstrap.js",
     "typings": "./ng2-bootstrap.d.ts",
     "devDependencies": {
-        "@angular/common": "^2.0.0-rc.1",
-        "@angular/compiler": "^2.0.0-rc.1",
-        "@angular/core": "^2.0.0-rc.1",
-        "@angular/router": "^2.0.0-rc.1",
-        "@angular/router-deprecated": "^2.0.0-rc.1",
-        "@angular/platform-browser": "^2.0.0-rc.1",
-        "@angular/platform-browser-dynamic": "^2.0.0-rc.1",
+        "@angular/common": "^2.0.0-rc.3",
+        "@angular/compiler": "^2.0.0-rc.3",
+        "@angular/core": "^2.0.0-rc.3",
+        "@angular/router": "^3.0.0-alpha.7",
+        "@angular/platform-browser": "^2.0.0-rc.3",
+        "@angular/platform-browser-dynamic": "^2.0.0-rc.3",
         "del": "^2.2.0",
         "es6-promise": "3.2.1",
         "es6-shim": "0.35.1",

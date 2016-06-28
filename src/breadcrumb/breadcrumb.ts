@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {FORM_DIRECTIVES, Location} from '@angular/common';
-import {ROUTER_DIRECTIVES, Router} from '@angular/router';
+import {FORM_DIRECTIVES} from '@angular/common';
+import {ROUTER_DIRECTIVES, Router, NavigationEnd} from '@angular/router';
 import {BreadcrumbService} from './breadcrumbService';
 
 /**
@@ -13,7 +13,7 @@ import {BreadcrumbService} from './breadcrumbService';
     template: `
         <div>
             <ul class="breadcrumb">
-                <li *ngFor="let url of urls; let last = last" [ngClass]="{'active': last}"> <!-- disable link of last item -->
+                <li *ngFor="let url of _urls; let last = last" [ngClass]="{'active': last}"> <!-- disable link of last item -->
                     <a role="button" *ngIf="!last" (click)="navigateTo(url)">{{friendlyName(url)}}</a>
                     <span *ngIf="last">{{friendlyName(url)}}</span>
                 </li>
@@ -45,20 +45,18 @@ export class BreadcrumbComponent {
 
     private _urls: string[];
 
-    constructor(private router: Router, private location: Location, private breadcrumbService: BreadcrumbService) {
+    constructor(private router: Router, private breadcrumbService: BreadcrumbService) {
         this._urls = new Array();
-        this.router.changes.subscribe(() => {
+        this.router.events.subscribe((navigationEnd:NavigationEnd) => {
             this._urls.length = 0; //Fastest way to clear out array
-            this.generateBreadcrumbTrail(this.location.platformStrategy.path());
+            this.generateBreadcrumbTrail(navigationEnd.urlAfterRedirects ? navigationEnd.urlAfterRedirects : navigationEnd.url);
         });
     }
 
     generateBreadcrumbTrail(url: string): void {
         this._urls.unshift(url); //Add url to beginning of array (since the url is being recursively broken down from full url to its parent)
-        if (url.lastIndexOf('/') > url.lastIndexOf('%') && url.lastIndexOf('/') > 0) {
+        if (url.lastIndexOf('/') > 0) {
             this.generateBreadcrumbTrail(url.substr(0, url.lastIndexOf('/'))); //Find last '/' and add everything before it as a parent route
-        } else if (url.lastIndexOf('%') > url.lastIndexOf('/') && url.lastIndexOf('%') > 0) {
-            this.generateBreadcrumbTrail(url.substr(0, url.lastIndexOf('%'))); //Find last '%' and add everything before it as a parent route
         }
     }
 
@@ -66,16 +64,8 @@ export class BreadcrumbComponent {
         this.router.navigateByUrl(url);
     }
 
-    friendlyName(url: string): String {
+    friendlyName(url: string): string {
         return !url ? '' : this.breadcrumbService.getFriendlyNameForRoute(url);
-    }
-
-    get urls(): string[] {
-        return this._urls;
-    }
-
-    set urls(value: string[]) {
-        this._urls = value;
     }
 
 }
