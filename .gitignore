@@ -9,3 +9,4 @@ ng2-breadcrumb.d.ts
 app/**/*.js
 app/**/*.js.map
 app/**/*.d.ts
+*.log
