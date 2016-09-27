@@ -6,10 +6,10 @@
         "start": "tsc && concurrently \"npm run tsc\" \"npm run lite\" ",
         "lite": "lite-server",
         "postinstall": "typings install",
-        "tsc": "tsc -w --project .",
+        "tsc": "tsc -w",
         "typings": "typings",
         "build": "tsc",
-        "bundles": "tsc -m system --project . --rootDir ./app --outFile ./bundles/ng2-breadcrumb.js"
+        "bundles": "tsc -m system --rootDir ./app --outFile ./bundles/ng2-breadcrumb.js"
     },
     "repository": {
         "type": "git",
