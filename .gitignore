@@ -2,10 +2,11 @@
 /build/
 /bundles/
 /dist/
-/webserver/
 /.idea/
-/PhantomJS_1.9.8_(Windows_7_0.0.0)/
 ng2-breadcrumb.js
+ng2-breadcrumb.js.map
 ng2-breadcrumb.d.ts
-src/**/*.js
-src/**/*.d.ts
+app/**/*.js
+app/**/*.js.map
+app/**/*.d.ts
+*.log

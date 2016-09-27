@@ -1,2 +1,3 @@
-export {BreadcrumbComponent} from './src/breadcrumb/breadcrumb';
-export {BreadcrumbService} from './src/breadcrumb/breadcrumbService';
+export {Ng2BreadcrumbModule} from './app/app.module';
+export {BreadcrumbComponent} from './app/components/breadcrumb';
+export {BreadcrumbService} from './app/components/breadcrumbService';

@@ -1,20 +1,20 @@
 {
-    "version": "1.8.9",
     "compilerOptions": {
+        "target": "es5",
         "module": "commonjs",
         "moduleResolution": "node",
-        "target": "ES5",
+        "sourceMap": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "inlineSourceMap": true,
-        "inlineSources": true,
-        "declaration": true
+        "removeComments": false,
+        "noImplicitAny": false
     },
     "exclude": [
         "typings/main",
         "typings/main.d.ts",
         "node_modules",
         "bundles",
-        "dist"
+        "demo",
+        "test"
     ]
 }
