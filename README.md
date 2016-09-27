@@ -27,37 +27,41 @@ Install the module via npm:
     npm install ng2-breadcrumb --save
 
 ## Usage
-Import the BreadcrumbService and make it available as a global provider when you bootstrap your app:
+Import the breadcrumb module into your module and provide its service
 
-	import {BreadcrumbService} from 'ng2-breadcrumb/ng2-breadcrumb';
+	import {Ng2BreadcrumbModule, BreadcrumbService} from 'ng2-breadcrumb/ng2-breadcrumb';
 
-	bootstrap(App, [
-		BreadcrumbService
-	])
-
-Import both the BreadcrumbComponent & BreadcrumbService into your component and update its directive list:
-
-	import {BreadcrumbComponent, BreadcrumbService} from 'ng2-breadcrumb/ng2-breadcrumb';
-
-	@Component({
-		directives: [BreadcrumbComponent]
-	})
-	class Component {
-		...
-	}
+	@NgModule({
+        imports: [Ng2BreadcrumbModule],
+        providers: [BreadcrumbService]
+    })
+    export class AppModule {
+        ...
+    }
 	
-Inject the BreadcrumbService via the component's constructor, so you can add friendly names for each of your apps routes:
+Inject the BreadcrumbService into your component, so you can add friendly names for each of your apps routes (paths):
 
-	constructor(private breadcrumbService: BreadcrumbService) {
-		breadcrumbService.addFriendlyNameForRoute('/home', 'Home Sweet Home');
-	}
+    export class AppComponent {
+        constructor(private breadcrumbService: BreadcrumbService) {
+            breadcrumbService.addFriendlyNameForRoute('/home', 'Home Sweet Home');
+        }
+    }
 
 Place the breadcrumb selector in your component's html where you added your router-outlet:
 
 	<breadcrumb></breadcrumb>
 	<router-outlet></router-outlet>
-    
-## Build
-To compile the project locally just run the default gulp task (ensure you have gulp install globally to do this):
 
-    gulp
+## Build
+
+    npm install
+    npm build
+
+To build a standalone bundle:
+
+    npm bundles
+
+## Running
+
+    npm start
+

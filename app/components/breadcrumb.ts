@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
-import {FORM_DIRECTIVES} from '@angular/common';
-import {ROUTER_DIRECTIVES, Router, NavigationEnd} from '@angular/router';
+import {Router, NavigationEnd} from '@angular/router';
 import {BreadcrumbService} from './breadcrumbService';
 
 /**
@@ -9,7 +8,6 @@ import {BreadcrumbService} from './breadcrumbService';
  */
 @Component({
     selector: 'breadcrumb',
-    directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES],
     template: `
         <div>
             <ul class="breadcrumb">
