@@ -6,17 +6,7 @@ So given a navigation request to a url '/comp1/comp2/comp3', a breadcrumb trail 
 level along with the next child. Thus the above url request will result in the following 3 levels being generated: '/comp1', '/comp1/comp2', '/comp1/comp2/comp3'.
 
 Theres a breadcrumbService that allows you to add friendly names for each of your app's available routes. This friendly name will show up in the breadcrumb trail 
-for each matching level, otherwise it will show the full url fragment.
-
-Below is an example of how to use the breadcrumbService, to give friendly names to the 3 levels availbe in the example app.
-
-	constructor(private breadcrumbService: BreadcrumbService) {
-		breadcrumbService.addFriendlyNameForRoute('/comp1', 'Comp 1');
-		breadcrumbService.addFriendlyNameForRoute('/comp1/comp2', 'Comp 2');
-		breadcrumbService.addFriendlyNameForRoute('/comp1/comp2/comp3', 'Comp 3');
-	}
-
-For a live example see: http://plnkr.co/BO2ruqRzNeu5BsZqCYtW
+for each matching level, otherwise it will show the last url fragment.
 
 ## Dependencies
 Requires bootstrap.css (v 3.x.x) for styling of some elements (although the component is fully functional without it).
@@ -52,14 +42,26 @@ Place the breadcrumb selector in your component's html where you added your rout
 	<router-outlet></router-outlet>
     
 ## BreadcrumbService
-Use the BreadcrumbService to:
-1) Add friendly names for each of your apps routes (paths)
+Add friendly names for each of your app's routes (paths). Can also specify regular expressions to match routes and assign a friendly name.
 
     breadcrumbService.addFriendlyNameForRoute('/home', 'Home Sweet Home');
+    breadcrumbService.addFriendlyNameForRoute('/home/users', 'All users');
+    breadcrumbService.addFriendlyNameForRouteRegex('/home/users/[0-9]/info', 'Information');
     
-2) Hide routes (paths) from the breadcrumb trail   
+Specify a callback function that will supply a name for a specific route or regex. 
+This is intended to be used when a route contains path params. It allows you display a specific name for the given id contained in the route url.
     
-    breadcrumbService.hideRoute('/home/secretPath');
+    breadcrumbService.addCallbackForRoute('/home/users/1', this.getNameForUser);
+    breadcrumbService.addCallbackForRouteRegex('^/home/users/[0-9]$', this.getNameForUser);
+    
+    getNameForUser(id:string):string {
+        return 'specific name for user with id';
+    }
+    
+Hide certain routes (paths) from the breadcrumb trail using an exact url or regex.
+    
+    breadcrumbService.hideRoute('/home/secret');
+    breadcrumbService.hideRouteRegex('^/home/secret/[a-zA-Z]');
 
 ## Build
 
@@ -73,4 +75,3 @@ To build a standalone bundle:
 ## Running
 
     npm start
-

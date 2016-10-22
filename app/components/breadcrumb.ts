@@ -52,7 +52,7 @@ export class BreadcrumbComponent {
     }
 
     generateBreadcrumbTrail(url: string): void {
-        if (!this.breadcrumbService.getHiddenRoutes().includes(url)) {
+        if (!this.breadcrumbService.isRouteHidden(url)) {
             //Add url to beginning of array (since the url is being recursively broken down from full url to its parent)
             this._urls.unshift(url);
         }
