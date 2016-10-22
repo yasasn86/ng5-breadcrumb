@@ -1,9 +1,7 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent }  from './app.component';
-import { Component1 } from './app.component';
-import { Component2 } from './app.component';
-import { Component3 } from './app.component';
+import { Component1, Component2, Component3, Component4 } from './app.component';
 import { routing, appRoutingProviders }  from './app.routing';
 import { Ng2BreadcrumbModule, BreadcrumbService } from '../app/app.module';
 
@@ -17,7 +15,8 @@ import { Ng2BreadcrumbModule, BreadcrumbService } from '../app/app.module';
         AppComponent,
         Component1,
         Component2,
-        Component3
+        Component3,
+        Component4
     ],
     providers: [
         appRoutingProviders,
