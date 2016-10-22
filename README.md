@@ -39,11 +39,10 @@ Import the breadcrumb module into your module and provide its service
         ...
     }
 	
-Inject the BreadcrumbService into your component, so you can add friendly names for each of your apps routes (paths):
+Inject the BreadcrumbService into your component
 
     export class AppComponent {
         constructor(private breadcrumbService: BreadcrumbService) {
-            breadcrumbService.addFriendlyNameForRoute('/home', 'Home Sweet Home');
         }
     }
 
@@ -51,6 +50,16 @@ Place the breadcrumb selector in your component's html where you added your rout
 
 	<breadcrumb></breadcrumb>
 	<router-outlet></router-outlet>
+    
+## BreadcrumbService
+Use the BreadcrumbService to:
+1) Add friendly names for each of your apps routes (paths)
+
+    breadcrumbService.addFriendlyNameForRoute('/home', 'Home Sweet Home');
+    
+2) Hide routes (paths) from the breadcrumb trail   
+    
+    breadcrumbService.hideRoute('/home/secretPath');
 
 ## Build
 
