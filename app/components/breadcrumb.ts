@@ -51,6 +51,7 @@ export class BreadcrumbComponent {
         return !url ? '' : this.breadcrumbService.getFriendlyNameForRoute(url);
     }
 
+    ngOnDestroy(): void {
         this._routerSubrciption.unsubscribe();
     }
 
