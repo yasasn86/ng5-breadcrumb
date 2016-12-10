@@ -76,7 +76,7 @@ export class Component3 {
 @Component({
     selector: 'comp4',
     template: `
-        <h3>This is Component 4, which uses a callback to disply its breadcrumb name</h3>
+        <h3>This is Component 4, which uses a callback to display its breadcrumb name</h3>
     `
 })
 export class Component4 {

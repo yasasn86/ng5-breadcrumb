@@ -22,10 +22,11 @@ import {BreadcrumbService} from './breadcrumbService';
 export class BreadcrumbComponent {
 
     private _urls: string[];
+    private _routerSubrciption: any;
 
     constructor(private router: Router, private breadcrumbService: BreadcrumbService) {
         this._urls = new Array();
-        this.router.events.subscribe((navigationEnd:NavigationEnd) => {
+        this._routerSubrciption = this.router.events.subscribe((navigationEnd:NavigationEnd) => {
             this._urls.length = 0; //Fastest way to clear out array
             this.generateBreadcrumbTrail(navigationEnd.urlAfterRedirects ? navigationEnd.urlAfterRedirects : navigationEnd.url);
         });
@@ -48,6 +49,9 @@ export class BreadcrumbComponent {
 
     friendlyName(url: string): string {
         return !url ? '' : this.breadcrumbService.getFriendlyNameForRoute(url);
+    }
+
+        this._routerSubrciption.unsubscribe();
     }
 
 }

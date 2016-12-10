@@ -34,7 +34,7 @@ export class BreadcrumbService {
      * Specify a callback for the corresponding route.
      * When a mathing url is navigatedd to, the callback function is invoked to get the name to be displayed in the breadcrumb.
      */
-    addCallbackForRoute(route: string, callback: () => string): void {
+    addCallbackForRoute(route: string, callback: (id: string) => string): void {
         this.routesWithCallback.set(route, callback);
     }
     
@@ -42,7 +42,7 @@ export class BreadcrumbService {
      * Specify a callback for the corresponding route matching a regular expression.
      * When a mathing url is navigatedd to, the callback function is invoked to get the name to be displayed in the breadcrumb.
      */
-    addCallbackForRouteRegex(routeRegex: string, callback: () => string): void {
+    addCallbackForRouteRegex(routeRegex: string, callback: (id: string) => string): void {
         this.routesWithCallbackRegex.set(routeRegex, callback);
     }
 
