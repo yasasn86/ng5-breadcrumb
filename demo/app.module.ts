@@ -1,9 +1,10 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { AppComponent }  from './app.component';
 import { Component1, Component2, Component3, Component4 } from './app.component';
 import { routing, appRoutingProviders }  from './app.routing';
-import { Ng2BreadcrumbModule, BreadcrumbService } from '../app/app.module';
+import { Ng2BreadcrumbModule } from '../app/app.module';
 
 @NgModule({
     imports: [
@@ -19,8 +20,7 @@ import { Ng2BreadcrumbModule, BreadcrumbService } from '../app/app.module';
         Component4
     ],
     providers: [
-        appRoutingProviders,
-        BreadcrumbService
+        appRoutingProviders
     ],
     bootstrap: [ AppComponent ]
 })

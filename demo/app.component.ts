@@ -1,27 +1,35 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { BreadcrumbService } from '../app/app.module';
+import { Observable, Subscriber } from 'rxjs/Rx';
+
+import { RouteName } from '../app/app.module';
 
 @Component({
     selector: 'app',
     template: `
         <div class="container">
             <h1>Breadcrumb Example</h1>
-            <breadcrumb></breadcrumb>
+            <breadcrumb [routeName]="routeName"></breadcrumb>
             <router-outlet></router-outlet>
         </div>
     `
 })
 export class AppComponent {
-    constructor(private breadcrumbService: BreadcrumbService) {
-        breadcrumbService.addFriendlyNameForRoute('/comp1', 'Comp 1');
-        breadcrumbService.addFriendlyNameForRouteRegex('^/comp1/comp[0-9]$', 'Comp 2');
-        breadcrumbService.hideRoute('/comp1/comp2/comp3');
-        breadcrumbService.addCallbackForRouteRegex('/comp1/comp2/comp3/[0-9]', this.getName);
-    }
-    
-    getName(id:string): string {
-        return 'Comp ' + id;
+
+    routeName(url:string):Observable<string> {
+        return new Observable<string>((observer: Subscriber<string>) => {
+            var name:string = '';
+            if ('/comp1' == url) {
+                name = 'Comp 1';
+            } else if (new RegExp('^/comp1/comp[0-9]$').exec(url)) {
+                name = 'Comp 2';
+            } else if ('/comp1/comp2/comp3' == url) {
+                name = '';
+            } else if (new RegExp('/comp1/comp2/comp3/[0-9]').exec(url)) {
+                name = url.slice(url.lastIndexOf('/') + 1, url.length);
+            } 
+            observer.next(name);
+        });
     }
 }
 
@@ -76,7 +84,7 @@ export class Component3 {
 @Component({
     selector: 'comp4',
     template: `
-        <h3>This is Component 4, which uses a callback to display its breadcrumb name</h3>
+        <h3>This is Component 4, which uses a value contained in the url that can be used to lookup an meaningful name</h3>
     `
 })
 export class Component4 {

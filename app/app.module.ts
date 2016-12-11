@@ -2,10 +2,10 @@ import { NgModule }      from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { BreadcrumbComponent } from './components/breadcrumb';
-import { BreadcrumbService } from './components/breadcrumbService';
+import { RouteName } from './components/routeName';
 
-export * from './components/breadcrumb'
-export * from './components/breadcrumbService'
+export * from './components/breadcrumb';
+export * from './components/routeName';
 
 @NgModule({
     imports: [

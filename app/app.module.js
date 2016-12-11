@@ -15,7 +15,6 @@ var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
 var breadcrumb_1 = require('./components/breadcrumb');
 __export(require('./components/breadcrumb'));
-__export(require('./components/breadcrumbService'));
 var Ng2BreadcrumbModule = (function () {
     function Ng2BreadcrumbModule() {
     }
