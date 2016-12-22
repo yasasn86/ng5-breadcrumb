@@ -34,6 +34,9 @@ var BreadcrumbComponent = (function () {
         });
     };
     BreadcrumbComponent.prototype.ngOnChanges = function () {
+        if (!this._urls) {
+            return;
+        }
         this._urls.length = 0;
         this.generateBreadcrumbTrail(this.router.url);
     };

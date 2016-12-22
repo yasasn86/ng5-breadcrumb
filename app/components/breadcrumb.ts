@@ -45,6 +45,10 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(): void {
+        if (!this._urls) {
+            return;
+        }
+        
         this._urls.length = 0;
         this.generateBreadcrumbTrail(this.router.url);
     }
