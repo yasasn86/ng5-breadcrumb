@@ -22,7 +22,10 @@ var BreadcrumbComponent = (function () {
         this.breadcrumbService = breadcrumbService;
         this.useBootstrap = true;
         this._urls = new Array();
-        this._routerSubrciption = this.router.events.subscribe(function (navigationEnd) {
+        if (this.prefix.length > 0) {
+            this._urls.unshift(this.prefix);
+        }
+        this._routerSubscription = this.router.events.subscribe(function (navigationEnd) {
             _this._urls.length = 0; //Fastest way to clear out array
             _this.generateBreadcrumbTrail(navigationEnd.urlAfterRedirects ? navigationEnd.urlAfterRedirects : navigationEnd.url);
         });
@@ -46,7 +49,7 @@ var BreadcrumbComponent = (function () {
         return !url ? '' : this.breadcrumbService.getFriendlyNameForRoute(url);
     };
     BreadcrumbComponent.prototype.ngOnDestroy = function () {
-        this._routerSubrciption.unsubscribe();
+        this._routerSubscription.unsubscribe();
     };
     return BreadcrumbComponent;
 }());
@@ -61,7 +64,7 @@ __decorate([
 BreadcrumbComponent = __decorate([
     core_1.Component({
         selector: 'breadcrumb',
-        template: "\n        <div>\n            <ul [class.breadcrumb]=\"useBootstrap\">\n                <li *ngFor=\"let url of _urls; let last = last\" [ngClass]=\"{'active': last}\"> <!-- disable link of last item -->\n                    <a role=\"button\" *ngIf=\"!last && url == prefix\" (click)=\"navigateTo('/')\">{{url}}</a>\n                    <a role=\"button\" *ngIf=\"!last && url != prefix\" (click)=\"navigateTo(url)\">{{friendlyName(url)}}</a>\n                    <span *ngIf=\"last\">{{friendlyName(url)}}</span>\n                    <span *ngIf=\"last && url == prefix\">{{friendlyName('/')}}</span>\n                </li>\n            </ul>\n        </div>\n    "
+        template: "\n        <ul [class.breadcrumb]=\"useBootstrap\">\n            <li *ngFor=\"let url of _urls; let last = last\" [ngClass]=\"{'active': last}\"> <!-- disable link of last item -->\n                <a role=\"button\" *ngIf=\"!last && url == prefix\" (click)=\"navigateTo('/')\">{{url}}</a>\n                <a role=\"button\" *ngIf=\"!last && url != prefix\" (click)=\"navigateTo(url)\">{{friendlyName(url)}}</a>\n                <span *ngIf=\"last\">{{friendlyName(url)}}</span>\n                <span *ngIf=\"last && url == prefix\">{{friendlyName('/')}}</span>\n            </li>\n        </ul>\n    "
     }),
     __metadata('design:paramtypes', [router_1.Router, breadcrumbService_1.BreadcrumbService])
 ], BreadcrumbComponent);
