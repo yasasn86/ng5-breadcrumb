@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router, NavigationEnd} from '@angular/router';
 import {BreadcrumbService} from './breadcrumbService';
 
@@ -19,14 +19,19 @@ import {BreadcrumbService} from './breadcrumbService';
         </ul>
     `
 })
-export class BreadcrumbComponent {
+export class BreadcrumbComponent implements OnInit {
     @Input() useBootstrap: boolean = true;
-    @Input() prefix: string;
+    @Input() prefix:       string  = '';
     
     private _urls: string[];
     private _routerSubscription: any;
 
-    constructor(private router: Router, private breadcrumbService: BreadcrumbService) {
+    constructor(
+        private router: Router,
+        private breadcrumbService: BreadcrumbService
+    ) {}
+
+    ngOnInit(): void {
         this._urls = new Array();
         
         if (this.prefix.length > 0) {

@@ -17,10 +17,13 @@ var breadcrumbService_1 = require('./breadcrumbService');
  */
 var BreadcrumbComponent = (function () {
     function BreadcrumbComponent(router, breadcrumbService) {
-        var _this = this;
         this.router = router;
         this.breadcrumbService = breadcrumbService;
         this.useBootstrap = true;
+        this.prefix = '';
+    }
+    BreadcrumbComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this._urls = new Array();
         if (this.prefix.length > 0) {
             this._urls.unshift(this.prefix);
@@ -29,7 +32,7 @@ var BreadcrumbComponent = (function () {
             _this._urls.length = 0; //Fastest way to clear out array
             _this.generateBreadcrumbTrail(navigationEnd.urlAfterRedirects ? navigationEnd.urlAfterRedirects : navigationEnd.url);
         });
-    }
+    };
     BreadcrumbComponent.prototype.generateBreadcrumbTrail = function (url) {
         if (!this.breadcrumbService.isRouteHidden(url)) {
             //Add url to beginning of array (since the url is being recursively broken down from full url to its parent)
@@ -66,7 +69,8 @@ BreadcrumbComponent = __decorate([
         selector: 'breadcrumb',
         template: "\n        <ul [class.breadcrumb]=\"useBootstrap\">\n            <li *ngFor=\"let url of _urls; let last = last\" [ngClass]=\"{'active': last}\"> <!-- disable link of last item -->\n                <a role=\"button\" *ngIf=\"!last && url == prefix\" (click)=\"navigateTo('/')\">{{url}}</a>\n                <a role=\"button\" *ngIf=\"!last && url != prefix\" (click)=\"navigateTo(url)\">{{friendlyName(url)}}</a>\n                <span *ngIf=\"last\">{{friendlyName(url)}}</span>\n                <span *ngIf=\"last && url == prefix\">{{friendlyName('/')}}</span>\n            </li>\n        </ul>\n    "
     }),
-    __metadata('design:paramtypes', [router_1.Router, breadcrumbService_1.BreadcrumbService])
+    __metadata('design:paramtypes', [router_1.Router,
+        breadcrumbService_1.BreadcrumbService])
 ], BreadcrumbComponent);
 exports.BreadcrumbComponent = BreadcrumbComponent;
 //# sourceMappingURL=breadcrumb.js.map
