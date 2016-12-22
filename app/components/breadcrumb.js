@@ -8,9 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
-var breadcrumbService_1 = require('./breadcrumbService');
+var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
+var breadcrumbService_1 = require("./breadcrumbService");
 /**
  * This component shows a breadcrumb trail for available routes the router can navigate to.
  * It subscribes to the router in order to update the breadcrumb trail as you navigate to a component.
@@ -32,6 +32,10 @@ var BreadcrumbComponent = (function () {
             _this._urls.length = 0; //Fastest way to clear out array
             _this.generateBreadcrumbTrail(navigationEnd.urlAfterRedirects ? navigationEnd.urlAfterRedirects : navigationEnd.url);
         });
+    };
+    BreadcrumbComponent.prototype.ngOnChanges = function () {
+        this._urls.length = 0;
+        this.generateBreadcrumbTrail(this.router.url);
     };
     BreadcrumbComponent.prototype.generateBreadcrumbTrail = function (url) {
         if (!this.breadcrumbService.isRouteHidden(url)) {
@@ -58,18 +62,18 @@ var BreadcrumbComponent = (function () {
 }());
 __decorate([
     core_1.Input(),
-    __metadata('design:type', Boolean)
-], BreadcrumbComponent.prototype, 'useBootstrap', void 0);
+    __metadata("design:type", Boolean)
+], BreadcrumbComponent.prototype, "useBootstrap", void 0);
 __decorate([
     core_1.Input(),
     __metadata("design:type", String)
-], BreadcrumbComponent.prototype, 'prefix', void 0);
+], BreadcrumbComponent.prototype, "prefix", void 0);
 BreadcrumbComponent = __decorate([
     core_1.Component({
         selector: 'breadcrumb',
         template: "\n        <ul [class.breadcrumb]=\"useBootstrap\">\n            <li *ngFor=\"let url of _urls; let last = last\" [ngClass]=\"{'active': last}\"> <!-- disable link of last item -->\n                <a role=\"button\" *ngIf=\"!last && url == prefix\" (click)=\"navigateTo('/')\">{{url}}</a>\n                <a role=\"button\" *ngIf=\"!last && url != prefix\" (click)=\"navigateTo(url)\">{{friendlyName(url)}}</a>\n                <span *ngIf=\"last\">{{friendlyName(url)}}</span>\n                <span *ngIf=\"last && url == prefix\">{{friendlyName('/')}}</span>\n            </li>\n        </ul>\n    "
     }),
-    __metadata('design:paramtypes', [router_1.Router,
+    __metadata("design:paramtypes", [router_1.Router,
         breadcrumbService_1.BreadcrumbService])
 ], BreadcrumbComponent);
 exports.BreadcrumbComponent = BreadcrumbComponent;

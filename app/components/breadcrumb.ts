@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, OnChanges} from '@angular/core';
 import {Router, NavigationEnd} from '@angular/router';
 import {BreadcrumbService} from './breadcrumbService';
 
@@ -19,7 +19,7 @@ import {BreadcrumbService} from './breadcrumbService';
         </ul>
     `
 })
-export class BreadcrumbComponent implements OnInit {
+export class BreadcrumbComponent implements OnInit, OnChanges {
     @Input() useBootstrap: boolean = true;
     @Input() prefix:       string  = '';
     
@@ -42,6 +42,11 @@ export class BreadcrumbComponent implements OnInit {
             this._urls.length = 0; //Fastest way to clear out array
             this.generateBreadcrumbTrail(navigationEnd.urlAfterRedirects ? navigationEnd.urlAfterRedirects : navigationEnd.url);
         });
+    }
+
+    ngOnChanges(): void {
+        this._urls.length = 0;
+        this.generateBreadcrumbTrail(this.router.url);
     }
 
     generateBreadcrumbTrail(url: string): void {
