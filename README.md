@@ -40,6 +40,15 @@ Place the breadcrumb selector in your component's html where you added your rout
 
 	<breadcrumb></breadcrumb>
 	<router-outlet></router-outlet>
+	
+## Directives
+`useBootstrap: boolean` to apply the bootstrap breadcrumb style. Defaulted to true.
+
+	<breadcrumb [useBootstrap]="false"></breadcrumb>
+	
+`prefix: string` to have a static prefix as the first breadcrumb which routes to the base root when clicked.
+
+	<breadcrumb prefix="App Title"></breadcrumb>
     
 ## BreadcrumbService
 Add friendly names for each of your app's routes (paths). Can also specify regular expressions to match routes and assign a friendly name.
