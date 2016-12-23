@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input, OnInit, OnChanges} from '@angular/core';
 import {Router, NavigationEnd} from '@angular/router';
 import {BreadcrumbService} from './breadcrumbService';
 
@@ -9,27 +9,48 @@ import {BreadcrumbService} from './breadcrumbService';
 @Component({
     selector: 'breadcrumb',
     template: `
-        <div>
-            <ul class="breadcrumb">
-                <li *ngFor="let url of _urls; let last = last" [ngClass]="{'active': last}"> <!-- disable link of last item -->
-                    <a role="button" *ngIf="!last" (click)="navigateTo(url)">{{friendlyName(url)}}</a>
-                    <span *ngIf="last">{{friendlyName(url)}}</span>
-                </li>
-            </ul>
-        </div>
+        <ul [class.breadcrumb]="useBootstrap">
+            <li *ngFor="let url of _urls; let last = last" [ngClass]="{'active': last}"> <!-- disable link of last item -->
+                <a role="button" *ngIf="!last && url == prefix" (click)="navigateTo('/')">{{url}}</a>
+                <a role="button" *ngIf="!last && url != prefix" (click)="navigateTo(url)">{{friendlyName(url)}}</a>
+                <span *ngIf="last">{{friendlyName(url)}}</span>
+                <span *ngIf="last && url == prefix">{{friendlyName('/')}}</span>
+            </li>
+        </ul>
     `
 })
-export class BreadcrumbComponent {
-
+export class BreadcrumbComponent implements OnInit, OnChanges {
+    @Input() useBootstrap: boolean = true;
+    @Input() prefix:       string  = '';
+    
     private _urls: string[];
-    private _routerSubrciption: any;
+    private _routerSubscription: any;
 
-    constructor(private router: Router, private breadcrumbService: BreadcrumbService) {
+    constructor(
+        private router: Router,
+        private breadcrumbService: BreadcrumbService
+    ) {}
+
+    ngOnInit(): void {
         this._urls = new Array();
-        this._routerSubrciption = this.router.events.subscribe((navigationEnd:NavigationEnd) => {
+        
+        if (this.prefix.length > 0) {
+            this._urls.unshift(this.prefix);
+        }
+
+        this._routerSubscription = this.router.events.subscribe((navigationEnd:NavigationEnd) => {
             this._urls.length = 0; //Fastest way to clear out array
             this.generateBreadcrumbTrail(navigationEnd.urlAfterRedirects ? navigationEnd.urlAfterRedirects : navigationEnd.url);
         });
+    }
+
+    ngOnChanges(): void {
+        if (!this._urls) {
+            return;
+        }
+        
+        this._urls.length = 0;
+        this.generateBreadcrumbTrail(this.router.url);
     }
 
     generateBreadcrumbTrail(url: string): void {
@@ -40,6 +61,8 @@ export class BreadcrumbComponent {
 
         if (url.lastIndexOf('/') > 0) {
             this.generateBreadcrumbTrail(url.substr(0, url.lastIndexOf('/'))); //Find last '/' and add everything before it as a parent route
+        } else if (this.prefix.length > 0) {
+            this._urls.unshift(this.prefix);
         }
     }
 
@@ -52,7 +75,7 @@ export class BreadcrumbComponent {
     }
 
     ngOnDestroy(): void {
-        this._routerSubrciption.unsubscribe();
+        this._routerSubscription.unsubscribe();
     }
 
 }
