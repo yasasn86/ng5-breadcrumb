@@ -4,3 +4,6 @@
 /dist/
 /.idea/
 *.log
+
+/compiled
+*.metadata.json

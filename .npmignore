@@ -10,6 +10,8 @@ npm-debug.log
 coverage
 tests
 typings/*
+/compiled
+*.ngFactory.ts
 
 #################
 ## JetBrains

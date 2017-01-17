@@ -23,8 +23,8 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     @Input() useBootstrap: boolean = true;
     @Input() prefix:       string  = '';
     
-    private _urls: string[];
-    private _routerSubscription: any;
+    public _urls: string[];
+    public _routerSubscription: any;
 
     constructor(
         private router: Router,
@@ -44,7 +44,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
         });
     }
 
-    ngOnChanges(): void {
+    ngOnChanges(changes: any): void {
         if (!this._urls) {
             return;
         }
