@@ -33,7 +33,7 @@ var BreadcrumbComponent = (function () {
             _this.generateBreadcrumbTrail(navigationEnd.urlAfterRedirects ? navigationEnd.urlAfterRedirects : navigationEnd.url);
         });
     };
-    BreadcrumbComponent.prototype.ngOnChanges = function () {
+    BreadcrumbComponent.prototype.ngOnChanges = function (changes) {
         if (!this._urls) {
             return;
         }
