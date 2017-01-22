@@ -9,7 +9,7 @@ Theres a breadcrumbService that allows you to add friendly names for each of you
 for each matching level, otherwise it will show the last url fragment.
 
 ## Dependencies
-Requires bootstrap.css (v 3.x.x) for styling of some elements (although the component is fully functional without it).
+Optionally uses bootstrap.css (v 3.x.x) for styling of some elements (although the component is fully functional without it and there is a flag to turn off the dependency).
 
 ## Install
 Install the module via npm:
@@ -17,7 +17,18 @@ Install the module via npm:
     npm install ng2-breadcrumb --save
 
 ## Usage
-Import the breadcrumb module into your module and provide its service
+Import the this module into your module using forRoot()
+
+    import {Ng2BreadcrumbModule} from 'ng2-breadcrumb/ng2-breadcrumb';
+
+	@NgModule({
+        imports: [Ng2BreadcrumbModule.forRoot()]
+    })
+    export class AppModule {
+        ...
+    }
+
+Alternatively you can import the this module into your module and manually provide its service
 
 	import {Ng2BreadcrumbModule, BreadcrumbService} from 'ng2-breadcrumb/ng2-breadcrumb';
 
@@ -29,7 +40,7 @@ Import the breadcrumb module into your module and provide its service
         ...
     }
 	
-Inject the BreadcrumbService into your component
+Inject the BreadcrumbService into your component to map your routes
 
     export class AppComponent {
         constructor(private breadcrumbService: BreadcrumbService) {

@@ -7,8 +7,8 @@ export class BreadcrumbService {
     private routesFriendlyNamesRegex: Map<string, string> = new Map<string, string>();
     private routesWithCallback: Map<string, (string) => string> = new Map<string, (string) => string>();
     private routesWithCallbackRegex: Map<string, (string) => string> = new Map<string, (string) => string>();
-    private hideRoutes: Array<string> = new Array<string>();
-    private hideRoutesRegex: Array<string> = new Array<string>();
+    private hideRoutes: any = new Array<string>();
+    private hideRoutesRegex: any = new Array<string>();
 
     /**
      * Specify a friendly name for the corresponding route.
