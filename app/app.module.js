@@ -11,14 +11,21 @@ function __export(m) {
 var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
 var breadcrumb_1 = require("./components/breadcrumb");
+var breadcrumbService_1 = require("./components/breadcrumbService");
 __export(require("./components/breadcrumb"));
 __export(require("./components/breadcrumbService"));
-var Ng2BreadcrumbModule = (function () {
+var Ng2BreadcrumbModule = Ng2BreadcrumbModule_1 = (function () {
     function Ng2BreadcrumbModule() {
     }
+    Ng2BreadcrumbModule.forRoot = function () {
+        return {
+            ngModule: Ng2BreadcrumbModule_1,
+            providers: [breadcrumbService_1.BreadcrumbService]
+        };
+    };
     return Ng2BreadcrumbModule;
 }());
-Ng2BreadcrumbModule = __decorate([
+Ng2BreadcrumbModule = Ng2BreadcrumbModule_1 = __decorate([
     core_1.NgModule({
         imports: [
             common_1.CommonModule
@@ -32,4 +39,5 @@ Ng2BreadcrumbModule = __decorate([
     })
 ], Ng2BreadcrumbModule);
 exports.Ng2BreadcrumbModule = Ng2BreadcrumbModule;
+var Ng2BreadcrumbModule_1;
 //# sourceMappingURL=app.module.js.map
