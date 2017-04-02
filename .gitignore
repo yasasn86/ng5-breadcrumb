@@ -5,3 +5,6 @@
 *.log
 
 /aot
+/compiled
+*.metadata.json
+*.ngsummary.json

@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var app_module_1 = require("./app/app.module");
 exports.Ng2BreadcrumbModule = app_module_1.Ng2BreadcrumbModule;
 var breadcrumb_1 = require("./app/components/breadcrumb");
