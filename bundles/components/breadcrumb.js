@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,14 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
-var breadcrumbService_1 = require("./breadcrumbService");
-/**
- * This component shows a breadcrumb trail for available routes the router can navigate to.
- * It subscribes to the router in order to update the breadcrumb trail as you navigate to a component.
- */
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { BreadcrumbService } from './breadcrumbService';
 var BreadcrumbComponent = (function () {
     function BreadcrumbComponent(router, breadcrumbService) {
         this.router = router;
@@ -30,7 +24,7 @@ var BreadcrumbComponent = (function () {
             this._urls.unshift(this.prefix);
         }
         this._routerSubscription = this.router.events.subscribe(function (navigationEnd) {
-            _this._urls.length = 0; //Fastest way to clear out array
+            _this._urls.length = 0;
             _this.generateBreadcrumbTrail(navigationEnd.urlAfterRedirects ? navigationEnd.urlAfterRedirects : navigationEnd.url);
         });
     };
@@ -43,11 +37,10 @@ var BreadcrumbComponent = (function () {
     };
     BreadcrumbComponent.prototype.generateBreadcrumbTrail = function (url) {
         if (!this.breadcrumbService.isRouteHidden(url)) {
-            //Add url to beginning of array (since the url is being recursively broken down from full url to its parent)
             this._urls.unshift(url);
         }
         if (url.lastIndexOf('/') > 0) {
-            this.generateBreadcrumbTrail(url.substr(0, url.lastIndexOf('/'))); //Find last '/' and add everything before it as a parent route
+            this.generateBreadcrumbTrail(url.substr(0, url.lastIndexOf('/')));
         }
         else if (this.prefix.length > 0) {
             this._urls.unshift(this.prefix);
@@ -65,20 +58,19 @@ var BreadcrumbComponent = (function () {
     return BreadcrumbComponent;
 }());
 __decorate([
-    core_1.Input(),
+    Input(),
     __metadata("design:type", Boolean)
 ], BreadcrumbComponent.prototype, "useBootstrap", void 0);
 __decorate([
-    core_1.Input(),
+    Input(),
     __metadata("design:type", String)
 ], BreadcrumbComponent.prototype, "prefix", void 0);
 BreadcrumbComponent = __decorate([
-    core_1.Component({
+    Component({
         selector: 'breadcrumb',
         template: "\n        <ul [class.breadcrumb]=\"useBootstrap\">\n            <li *ngFor=\"let url of _urls; let last = last\" [ngClass]=\"{'breadcrumb-item': useBootstrap, 'active': last}\"> <!-- disable link of last item -->\n                <a role=\"button\" *ngIf=\"!last && url == prefix\" (click)=\"navigateTo('/')\">{{url}}</a>\n                <a role=\"button\" *ngIf=\"!last && url != prefix\" (click)=\"navigateTo(url)\">{{friendlyName(url)}}</a>\n                <span *ngIf=\"last\">{{friendlyName(url)}}</span>\n                <span *ngIf=\"last && url == prefix\">{{friendlyName('/')}}</span>\n            </li>\n        </ul>\n    "
     }),
-    __metadata("design:paramtypes", [router_1.Router,
-        breadcrumbService_1.BreadcrumbService])
+    __metadata("design:paramtypes", [Router,
+        BreadcrumbService])
 ], BreadcrumbComponent);
-exports.BreadcrumbComponent = BreadcrumbComponent;
-//# sourceMappingURL=breadcrumb.js.map
+export { BreadcrumbComponent };
