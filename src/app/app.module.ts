@@ -6,13 +6,10 @@ import { Component1, Component2, Component3, Component4 } from './app.component'
 import { routingModule, appRoutingProviders }  from './app.routing';
 
 import { Ng5BreadcrumbModule } from './components/breadcrumb/breadcrumb.module';
-import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
-import { BreadcrumbService } from './components/breadcrumb/breadcrumb.service';
 
 
 @NgModule({
   declarations: [
-    BreadcrumbComponent,
     AppComponent,
     Component1,
     Component2,
@@ -21,9 +18,10 @@ import { BreadcrumbService } from './components/breadcrumb/breadcrumb.service';
   ],
   imports: [
     BrowserModule,
-    routingModule    
+    routingModule,
+    Ng5BreadcrumbModule.forRoot()    
   ],
-  providers: [BreadcrumbService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
