@@ -29,9 +29,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     constructor(
         private router: Router,
         private breadcrumbService: BreadcrumbService
-    ) {}
-
-    ngOnInit(): void {
+    ) {
         this._urls = new Array();
 
         if (this.prefix.length > 0) {
@@ -45,6 +43,9 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
                 this.generateBreadcrumbTrail(navigationEnd.urlAfterRedirects ? navigationEnd.urlAfterRedirects : navigationEnd.url);
             }
         });
+    }
+
+    ngOnInit(): void {
     }
 
     ngOnChanges(changes: any): void {
